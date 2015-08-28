@@ -1,0 +1,29 @@
+{
+  "name": "grunt-blobify",
+  "version": "0.0.1",
+  "description": "Grunt task to convert server files to Blob for browser usage",
+  "main": "tasks/blobify.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webschik/grunt-blobify.git"
+  },
+  "keywords": [
+    "grunt",
+    "blob",
+    "browser",
+    "cache"
+  ],
+  "author": "webschik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/webschik/grunt-blobify/issues"
+  },
+  "homepage": "https://github.com/webschik/grunt-blobify",
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "mime": "^1.3.4"
+  }
+}
