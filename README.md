@@ -1,4 +1,4 @@
-# grunt-blobify
+# grunt-blobify [![Build Status](https://secure.travis-ci.org/webschik/grunt-blobify.png?branch=master)](https://travis-ci.org/webschik/grunt-blobify)
 Grunt task to convert any files to Blob for usage in browser
 
 ## Getting Started
