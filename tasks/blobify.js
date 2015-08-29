@@ -1,18 +1,14 @@
 var chalk = require('chalk');
 var mime = require('mime');
-var convertFnBody = base64toBlob.toString();
+var convertFnBody = createBlob.toString();
 mime.default_type = null;
 
-function base64toBlob(base64, contentType) {
-    var i,
-        binary = atob(base64.replace(/\s/g, '')),
-        len = binary.length,
-        buffer = new ArrayBuffer(len),
-        view = new Uint8Array(buffer);
-
-    for (i = 0; i < len; i++) {
-        view[i] = binary.charCodeAt(i);
-    }
+function createBlob(src, contentType) {
+    var data = JSON.parse(src).data;
+    var len = data.length;
+    var buffer = new ArrayBuffer(len);
+    var view = new Uint8Array(buffer);
+    view.set(data);
 
     return new Blob([view], {type: contentType});
 }
@@ -48,7 +44,6 @@ module.exports = function (grunt) {
                 var buffer = grunt.file.read(filepath, {
                     encoding: null
                 });
-                var base64 = buffer.toString('base64');
                 var contentType = mime.lookup(filepath);
 
                 if (!contentType) {
@@ -56,7 +51,7 @@ module.exports = function (grunt) {
                     return false;
                 }
 
-                filesSrc += 'files[\'' + filepath + '\'] = base64toBlob("' + base64 + '", "' + contentType + '");\n';
+                filesSrc += 'files[\'' + filepath + '\'] = createBlob(\'' + JSON.stringify(buffer) + '\', "' + contentType + '");\n';
             });
 
             if (!filesSrc) {
@@ -72,9 +67,7 @@ module.exports = function (grunt) {
                     break;
                 case 'global':
                     output = '(function (root) {\n' +
-                        output + '\nroot.files = files;\n}(' +
-                        (options.targetNamespace).replace(/\.+$/, '') +
-                        '));'
+                    output + '\nroot.files = files;\n}(' + (options.targetNamespace).replace(/\.+$/, '') + '));';
                     break;
             }
 
