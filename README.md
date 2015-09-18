@@ -52,7 +52,7 @@ myApp.cache.files = {
     '/YOUR_PATH2/*.docx': {Blob}
 };
 ````
-### `es6` target
+### `ES6` target
 ````js
 blobify: {
     main: {
