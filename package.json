@@ -1,6 +1,6 @@
 {
   "name": "grunt-blobify",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Grunt task to convert server files to Blob for browser usage",
   "main": "tasks/blobify.js",
   "scripts": {
