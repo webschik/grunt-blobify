@@ -3,14 +3,22 @@ var mime = require('mime');
 var convertFnBody = createBlob.toString();
 mime.default_type = null;
 
-function createBlob(src, contentType) {
+function createBlob(params) {
+    var src = params.src;
+    var contentType = params.type;
+    var name = params.name || '';
     var data = JSON.parse(src).data;
     var len = data.length;
     var buffer = new ArrayBuffer(len);
     var view = new Uint8Array(buffer);
     view.set(data);
 
-    return new Blob([view], {type: contentType});
+    var result = new Blob([view], {
+        type: contentType
+    });
+
+    result.name = name;
+    return result;
 }
 
 module.exports = function (grunt) {
@@ -51,7 +59,14 @@ module.exports = function (grunt) {
                     return false;
                 }
 
-                filesSrc += 'files[\'' + filepath + '\'] = createBlob(\'' + JSON.stringify(buffer) + '\', "' + contentType + '");\n';
+                var name = filepath.split('/').pop().split('.');
+                name.pop();
+
+                filesSrc += 'files[\'' + filepath + '\'] = createBlob({' +
+                    "src: '" + JSON.stringify(buffer) + "',\n" +
+                    "type: '" + contentType + "',\n" +
+                    "name: '" + name.join('.') + "'\n" +
+                    '});\n';
             });
 
             if (!filesSrc) {
