@@ -2,6 +2,9 @@ var chalk = require('chalk');
 var mime = require('mime');
 var convertFnBody = createBlob.toString();
 mime.default_type = null;
+mime.define({
+    'application/x-fictionbook+xml': ['fb2']
+});
 
 function createBlob(params) {
     var src = params.src;
