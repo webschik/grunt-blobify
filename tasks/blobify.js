@@ -62,13 +62,10 @@ module.exports = function (grunt) {
                     return false;
                 }
 
-                var name = filepath.split('/').pop().split('.');
-                name.pop();
-
                 filesSrc += 'files[\'' + filepath + '\'] = createBlob({' +
                     "src: '" + JSON.stringify(buffer) + "',\n" +
                     "type: '" + contentType + "',\n" +
-                    "name: '" + name.join('.') + "'\n" +
+                    "name: '" + filepath.split('/').pop() + "'\n" +
                     '});\n';
             });
 
